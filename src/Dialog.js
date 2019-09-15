@@ -6,7 +6,6 @@ class Dialog extends Component {
   constructor(props) {
     super(props);
     this.handleActivityInputChange= this.handleActivityInputChange.bind(this);
-    this.handPicked = this.handPicked.bind(this);
     this.state = {
       newActivity: '',
       activityChosen: ''
@@ -17,9 +16,11 @@ class Dialog extends Component {
     this.setState({newActivity: event.target.value});
   }
 
-  handPicked(activity) {
+  handlePicked(activity) {
     console.log('wejaeuaweiae', activity);
-    this.setState({activityChosen:activity});
+    this.setState({activityChosen: activity}, () => {
+      this.formDialogContent();
+    });
   }
 
   organizeData() {
@@ -27,7 +28,8 @@ class Dialog extends Component {
     let builtDiv = [];
     let occurenceMap = {};
     activities.map((curActivity) => {
-        const { activity } = curActivity;
+        let { activity } = curActivity;
+        activity = activity.toLowerCase();
         if ( title == 'Scheduled Activities') {
           removeActivity(activity);
           const { activityLeader, time, location } = curActivity;
@@ -47,7 +49,7 @@ class Dialog extends Component {
         for (var activity in occurenceMap) {
           builtDiv.push(
             <div className='Activity-list'>
-              <div className='Activity-vol'><span className='nudge-right'>{activity}</span><i class="float-right fas fa-hands-helping"></i></div>
+              <div className='Activity-vol'><span className='nudge-right'>{activity}</span><i onClick={this.handlePicked.bind(this, activity)} class="float-right fas fa-hands-helping"></i></div>
               <div className='Activity-secondary'>
                 Requested by {occurenceMap[activity]} person(s)
               </div>
@@ -59,7 +61,7 @@ class Dialog extends Component {
 
   formDialogContent() {
     const { activityRequest, volunteer, addActivity } = this.props;
-    const {  newActivity, activityChosen } = this.state;
+    const { newActivity, activityChosen } = this.state;
      if (activityRequest) {
       return <div><input className='app-inputBox' type="text" placeholder="Please submit an activity that you are eager to do or learn." id="pw" name="pw" required
       minlength="4" size="20" onChange={this.handleActivityInputChange}></input>
