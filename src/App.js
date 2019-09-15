@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dialog from './Dialog';
 import './App.css';
 import { base, signUp, signIn } from './base';
+import { runInContext } from 'vm';
 
 class App extends Component {
   constructor() {
@@ -11,12 +12,13 @@ class App extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.userSignInOrUp  = this.userSignInOrUp.bind(this);
+    this.removeActivity = this.removeActivity.bind(this);
+
     this.state = {
       users: [],
       scheduledActivities: [],
       requestedActivities: []
     }
-    console.log(base);
   }
 
   addUser(name, email, role) {
@@ -30,6 +32,17 @@ class App extends Component {
     };
 
     this.setState({users});
+  }
+
+  removeActivity(scheduledActivity = '') {
+    let { requestedActivities } = this.state;
+    for (var i of requestedActivities) {
+      const { activity = '' } = i || {};
+      if (activity == scheduledActivity) {
+        delete requestedActivities[i.id];
+      }
+    }
+    this.setState({requestedActivities});
   }
 
 
@@ -77,8 +90,6 @@ class App extends Component {
 
   render() {
     const { scheduledActivities, requestedActivities, email, password } = this.state;
-    console.log(scheduledActivities);
-    console.log(requestedActivities);
     return (
       <div className="App-wrapper">
         <header className="App-header">
@@ -104,8 +115,8 @@ class App extends Component {
             or volunteer to lead one. Rack up benefits for being an active member in your community!&nbsp;<i class="fas fa-sack"></i></span></div>
         </div>
         <div className="App-intro">
-          <Dialog activities={ scheduledActivities } title="Scheduled Activities" faName="fa-calendar-check"></Dialog>
-          <Dialog activities={ requestedActivities }  title="Requested Activities" faName="fa-calendar-star"></Dialog>
+          <Dialog activities={ scheduledActivities } removeActivity={this.removeActivity} title="Scheduled Activities" faName="fa-calendar-check"></Dialog>
+          <Dialog activities={ requestedActivities }  removeActivity={this.removeActivity} title="Requested Activities" faName="fa-calendar-star"></Dialog>
         </div>
       </div>
     );

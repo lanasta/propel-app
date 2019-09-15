@@ -6,12 +6,12 @@ body, html {
 }
 
 .App-wrapper {
-  position: fixed;
   width: 100%;
   height: 100%;
   top: 0px;
   left: 0px;
   z-index: 1000;
+  padding-bottom: 5vh;
   background-color: rgba(245,245,245, 0.27);
 }
 
@@ -47,7 +47,7 @@ body, html {
   margin: 0 10px 0 0;
   border-radius: 5px;
   height: 35px;
-  font-size: 1em;
+  font-size: 1.1vw;
   font-family: 'Fira Sans', sans-serif;
   background: #252525;
   color: white;
@@ -111,13 +111,13 @@ body, html {
 }
 
 .App-quote span {
-  display: flow-root;
+  display: block;
   padding-top: 35px;
 }
 
 .App-intro {
   width: 75%;
-  margin: 0 auto;
+  margin: 0 auto 5em;
   display: flex;
   right: 0;
 }
@@ -137,7 +137,7 @@ body, html {
 }
 
 .Dialog-content {
-  padding: 5% 2%;
+  padding: 3% 2%;
 }
 
 .Dialog-header {
@@ -152,12 +152,58 @@ body, html {
   box-sizing: border-box;
 }
 
+.Activity-list {
+  text-transform: capitalize;
+  height: 80px;
+  font-size: 1.3em;
+  font-weight: bold;
+  border-bottom: 1px solid darkgrey;
+}
+
+.Activity-vol {
+  display: flex;
+  flex-direction: row;
+}
+
+.Activity-vol i {
+  font-size: 1.4em;
+}
+
+.Activity-vol i:hover {
+  cursor:pointer;
+  color:#0677a1;
+}
+
+.Activity-vol span.nudge-right {
+  width: 90%;
+}
+
+.Activity-secondary {
+  font-weight: 300;
+  font-size: 1em;
+  margin-top: 5px;
+  text-transform: none;
+}
+
+.Activity-list:not(:first-child) {
+  margin-top: 10px;
+}
+
+.Activity-list:last-child {
+  border-bottom: none;
+}
+
 button.special-color {
   background: #0677a1;
 }
 
 .nudge-right {
   margin-right: 8px;
+}
+
+.float-right {
+  display: block;
+  float: right;
 }
 
 @keyframes App-logo-spin {
