@@ -5,6 +5,21 @@ import './App.css';
 class Dialog extends Component {
   constructor(props) {
     super(props);
+    this.handleActivityInputChange= this.handleActivityInputChange.bind(this);
+    this.handPicked = this.handPicked.bind(this);
+    this.state = {
+      newActivity: '',
+      activityChosen: ''
+    }
+  }
+
+  handleActivityInputChange(event) {
+    this.setState({newActivity: event.target.value});
+  }
+
+  handPicked(activity) {
+    console.log('wejaeuaweiae', activity);
+    this.setState({activityChosen:activity});
   }
 
   organizeData() {
@@ -12,8 +27,6 @@ class Dialog extends Component {
     let builtDiv = [];
     let occurenceMap = {};
     activities.map((curActivity) => {
-      console.log(title, curActivity);
-
         const { activity } = curActivity;
         if ( title == 'Scheduled Activities') {
           removeActivity(activity);
@@ -23,7 +36,7 @@ class Dialog extends Component {
             <div className='Activity-list'>
               {activity} with {activityLeader}
               <div className='Activity-secondary'>
-                {meetingTime.toLocaleString()} at {location}
+              <i class="nudge-right fas fa-clock"></i>{meetingTime.toLocaleString()} < i class="nudge-right fas fa-map-pin"></i>{location}
               </div>
             </div>);
           } else {
@@ -31,7 +44,6 @@ class Dialog extends Component {
           }
       });
       if (Object.keys(occurenceMap).length) {
-        console.log(occurenceMap);
         for (var activity in occurenceMap) {
           builtDiv.push(
             <div className='Activity-list'>
@@ -42,18 +54,35 @@ class Dialog extends Component {
             </div>);
         }
       }
-
-      console.log(occurenceMap);
     return builtDiv;
   }
 
+  formDialogContent() {
+    const { activityRequest, volunteer, addActivity } = this.props;
+    const {  newActivity, activityChosen } = this.state;
+     if (activityRequest) {
+      return <div><input className='app-inputBox' type="text" placeholder="Please submit an activity that you are eager to do or learn." id="pw" name="pw" required
+      minlength="4" size="20" onChange={this.handleActivityInputChange}></input>
+    <button className="app-submitButton nudge-top" onClick={ ()=>{addActivity(newActivity); this.setState({newActivity:''})} }>
+      Submit
+    </button></div>;
+    } else if (volunteer) {
+      return <div>Choose an activity to facilitate by clicking on one of the hand icons below.<br></br>
+      {activityChosen && <div>You have chosen to volunteer to facilitate the following activity ${activityChosen}</div> }</div>;
+    } else {
+      return <div>There are currently no activities available.</div> ;
+    } 
+  }
+
   render() {
-    const { activities, title, faName } = this.props;
+    const { activities = [], title, faName, activityRequest, volunteer } = this.props;
+    console.log(title, activities);
+    const activitiesListing = title.indexOf("Activities") > -1 && activities.length;
     return (
       <div className="Dialog-box">
           <div className="Dialog-header"><i class={`nudge-right fas ${faName}`}></i>{title}</div>
         <div className="Dialog-content">
-          { activities.length ? <div> {this.organizeData()}</div> : <div>There are currently no activities available.</div> }
+          { activitiesListing ? <div> {this.organizeData()}</div> : this.formDialogContent() }
         </div>
       </div>
     );

@@ -53,6 +53,14 @@ body, html {
   color: white;
 }
 
+button.app-submitButton.nudge-top {
+  font-size: 1em;
+  border-radius: 5px;
+  background: #252525;
+  color: white;
+  padding: 3px 8px;
+}
+
 .app-inputBox{
   width: 73%;
   border-radius: 5px;
@@ -91,6 +99,7 @@ body, html {
   background-position: 50% 85%;
   height: 350px;
   width: 100%;
+  margin-bottom: 2em;
 }
 
 .App-cover .App-quote {
@@ -112,18 +121,22 @@ body, html {
 
 .App-quote span {
   display: block;
-  padding-top: 35px;
+  padding-top: 28px;
 }
 
 .App-intro {
   width: 75%;
-  margin: 0 auto 5em;
+  margin: 0 auto 1em;
   display: flex;
   right: 0;
 }
 
+.App-intro:last-child {
+  margin-bottom: 5em;
+}
+
 .Dialog-box {
-  margin-top: 3%;
+  margin-top: 1%;
   width: 49%;
   justify-content: space-between;
   height: auto;
@@ -199,6 +212,10 @@ button.special-color {
 
 .nudge-right {
   margin-right: 8px;
+}
+
+.nudge-top { 
+  margin-top : 8px;
 }
 
 .float-right {
