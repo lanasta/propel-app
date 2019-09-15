@@ -14,11 +14,13 @@ class App extends Component {
     this.userSignInOrUp  = this.userSignInOrUp.bind(this);
     this.removeActivity = this.removeActivity.bind(this);
     this.addActivity = this.addActivity.bind(this);
+    this.triggerRerender = this.triggerRerender.bind(this);
 
     this.state = {
       users: [],
       scheduledActivities: [],
-      requestedActivities: []
+      requestedActivities: [],
+      needRerender: false
     }
   }
 
@@ -37,12 +39,16 @@ class App extends Component {
 
   removeActivity(scheduledActivity = '') {
     let { requestedActivities } = this.state;
-    for (var i of requestedActivities) {
-      const { activity = '' } = i || {};
+    console.log(requestedActivities);
+    for (var i in requestedActivities) {
+      console.log(i);
+      const { activity = '' } = requestedActivities[i];
+      console.log(activity, scheduledActivity);
       if (activity.toLowerCase() == scheduledActivity.toLowerCase()) {
-        delete requestedActivities[i.id];
+        delete requestedActivities[requestedActivities[i].id];
       }
     }
+    console.log(requestedActivities);
     this.setState({requestedActivities});
   }
 
@@ -50,10 +56,10 @@ class App extends Component {
     let { requestedActivities } = this.state;
     let actLength = Object.keys(requestedActivities).length;
     const date = new Date();
-    requestedActivities[actLength * 2] = {
+    requestedActivities[actLength * 2 + 3] = {
         "activity" : activityName,
         "dateRequested" : date.getTime(),
-        "id": actLength * 2
+        "id": actLength * 2 + 3
     }
     console.log(requestedActivities);
     this.setState({requestedActivities});
@@ -92,6 +98,10 @@ class App extends Component {
     this.setState({password: event.target.value});
   }
 
+  triggerRerender() {
+    this.setState({needRerender: true});
+  }
+
   userSignInOrUp = (signin) => {
     const { email, password } = this.state;
     if (!signin) {
@@ -104,6 +114,7 @@ class App extends Component {
 
   render() {
     const { scheduledActivities, requestedActivities, email, password } = this.state;
+    console.log(scheduledActivities);
     return (
       <div className="App-wrapper">
         <header className="App-header">
@@ -126,15 +137,15 @@ class App extends Component {
         </header>
         <div className="App-cover">
           <div className="App-quote"><span>Sign up to request activities, 
-            or share your talents and volunteer to lead an activity! Rack up benefits for being a helpful member in your community!&nbsp;<i class="fas fa-stars"></i></span></div>
+            or share your talents and volunteer to lead an activity! Rack up benefits for being a helpful member of your community!&nbsp;<i class="fas fa-stars"></i></span></div>
         </div>
         <div className="App-intro">
-          <Dialog activityRequest={"true"} addActivity={this.addActivity} title="Submit an Activity Request" faName="fa-hand-heart"></Dialog>
-          <Dialog volunteer={"true"} title="Volunteer to Facilitate an Activity" faName="fa-hands-helping"></Dialog>
-          </div>
+          <Dialog triggerRerender={this.triggerRerender} activityRequest={"true"} addActivity={this.addActivity} title="Submit an Activity Request" faName="fa-hand-heart"></Dialog>
+          <Dialog triggerRerender={this.triggerRerender} volunteer={"true"} title="Volunteer to Facilitate an Activity" faName="fa-hands-helping"></Dialog>
+        </div>
         <div className="App-intro">
-          <Dialog activities={ scheduledActivities } removeActivity={this.removeActivity} title="Scheduled Activities" faName="fa-calendar-check"></Dialog>
-          <Dialog activities={ requestedActivities }  removeActivity={this.removeActivity} title="Requested Activities" faName="fa-calendar-star"></Dialog>
+          <Dialog triggerRerender={this.triggerRerender} activities={ scheduledActivities } removeActivity={this.removeActivity} title="Scheduled Activities" faName="fa-calendar-check"></Dialog>
+          <Dialog triggerRerender={this.triggerRerender}  activities={ requestedActivities }  removeActivity={this.removeActivity} title="Requested Activities" faName="fa-calendar-star"></Dialog>
         </div>
       </div>
     );
