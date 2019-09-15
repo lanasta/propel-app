@@ -41,12 +41,20 @@ class App extends Component {
       context: this,
       state: 'users'
     });
-    console.log('eloa');
-    console.log(this.usersRef);
+    this.reqActivitiesRef = base.syncState('requestedActivities', {
+      context: this,
+      state: 'requestedActivities'
+    });
+    this.scheduledActivitiesRef = base.syncState('scheduledActivities', {
+      context: this,
+      state: 'scheduledActivities'
+    });
   }
 
   componentWillUnmount() {
     base.removeBinding(this.usersRef);
+    base.removeBinding(this.reqActivitiesRef);
+    base.removeBinding(this.scheduledActivitiesRef);
   }
 
   handleEmailChange(event) {
@@ -69,6 +77,8 @@ class App extends Component {
 
   render() {
     const { scheduledActivities, requestedActivities, email, password } = this.state;
+    console.log(scheduledActivities);
+    console.log(requestedActivities);
     return (
       <div className="App-wrapper">
         <header className="App-header">
