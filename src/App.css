@@ -1,25 +1,163 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Beth+Ellen|Fira+Sanss:300,400|Comfortaa&display=swap');
+body, html {
+  height: 100%;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 300;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.App-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  background-color: rgba(245,245,245, 0.27);
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  color: #252525;
+  padding-top: 3%;
+  max-height: 60px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  margin: 0 auto 50px;
+}
+
+.App-Login {
+  width: 80%;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  float: right;
+}
+
+.app-inputBox, .app-inputValue, .app-inputButton {
+  width: 30%;
+}
+
+.App-Login label, .app-signUpLink {
+  padding-top: 6px;
+}
+
+.App-Login button {
+  width: 25%;
+  margin: 0 10px 0 0;
+  border-radius: 5px;
+  height: 35px;
+  font-size: 1em;
+  font-family: 'Fira Sans', sans-serif;
+  background: #252525;
   color: white;
 }
 
+.app-inputBox{
+  width: 73%;
+  border-radius: 5px;
+  height: 30px;
+  margin: 0 10px;
+  font-size: 1em;
+  padding: 0 3px;
+}
+
+.app-inputValue {
+  width: auto;
+  margin-left: 5px;
+  padding: 3px;
+  border: 1px solid #252525;
+  border-radius: 5px;
+}
+
 .App-title {
-  font-size: 1.5em;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: left;
+  vertical-align: middle;
+  width: 50%;
+  letter-spacing: 2px;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.App-title i {
+  font-size: 0.9em;
+  margin-left: 5px;
+}
+
+.App-cover {
+  background-image: url('teens.jpg');
+  background-size: cover;
+  background-position: 50% 85%;
+  height: 350px;
+  width: 100%;
+}
+
+.App-cover .App-quote {
+  color: white;
+  text-align: left;
+  /* text-shadow: 1px 1px 2px #252525; */
+}
+
+.App-quote {
+  width: 25%;
+  margin: 0px 11.5%;
+  padding: 0 1%;
+  font-size: 1.7vw;
+  letter-spacing: 1px;
+  height: 350px;
+  background: rgba(20, 0, 0, 0.35);
+  line-height: 4.5vh;
+}
+
+.App-quote span {
+  display: flow-root;
+  padding-top: 35px;
 }
 
 .App-intro {
-  font-size: large;
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  right: 0;
+}
+
+.Dialog-box {
+  margin-top: 3%;
+  width: 49%;
+  justify-content: space-between;
+  height: auto;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  flex-direction: row;
+}
+
+.Dialog-box:first-child, .Dialog-content:first-child {
+  margin-right: 2%;
+}
+
+.Dialog-content {
+  padding: 5% 2%;
+}
+
+.Dialog-header {
+  height: 5;
+  background: #252525;
+  color: white;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 55px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+button.special-color {
+  background: #0677a1;
+}
+
+.nudge-right {
+  margin-right: 8px;
 }
 
 @keyframes App-logo-spin {
